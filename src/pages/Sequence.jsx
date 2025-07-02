@@ -38,11 +38,12 @@ const Sequence = () => {
   const fetchSequences = async () => {
     try {
       const res = await fetch(apiUrl);
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      // if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
       setSequences(data.content || []);
     } catch (err) {
       setError(err.message);
+      toast.error( "failed to fetch sequence data,")
     } finally {
       setLoading(false);
     }
@@ -144,18 +145,17 @@ const Sequence = () => {
     );
   }
 
-  if (error) {
-    return <div style={{ color: 'red' }}>Error: {error}</div>;
-  }
+  // if (error) {
+  //   return <div style={{ color: 'red' }}>Error: {error}</div>;
+  // }
 
   return (
     <Container className="mt-4">
-      <ToastContainer />
 
       <h2 className="mb-4 text-center">Sequence Management</h2>
 
       <Card className="p-4 shadow-sm mb-4">
-        <h4>{editing ? 'Update Sequence' : 'Add New Sequence'}</h4>
+        <h4 className='text-info'>{editing ? 'Update Sequence' : '➕ Add New Sequence'}</h4>
         <Form>
           <Row className="mb-3">
             <Col md={4}>

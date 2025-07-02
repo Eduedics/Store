@@ -327,7 +327,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button, Form, Spinner, Table, InputGroup } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export function Contact() {
@@ -553,7 +553,6 @@ export function Contact() {
 
   return (
     <Container className="mt-4">
-      <ToastContainer />
       <h2 className="text-center mb-4">Contact Management</h2>
 
       <InputGroup className="mb-3">
@@ -580,7 +579,7 @@ export function Contact() {
       </InputGroup>
 
       <Card className="p-4 shadow-sm mb-4">
-        <h4>{isEditing ? 'Update Contact' : 'Add New Contact'}</h4>
+        <h4 className='text-info'>{isEditing ? 'Update Contact' : ' ➕ Add New Contact'}</h4>
         <Form onSubmit={handleSubmit}>
           <Row>
             <Col md={6}>
@@ -600,7 +599,7 @@ export function Contact() {
               <Form.Group className="mb-3">
                 <Form.Label>Telephone</Form.Label>
                 <Form.Control
-                  type="number"
+                  type="tel"
                   name="telNo"
                   value={formData.telNo}
                   onChange={handleChange}
@@ -691,7 +690,7 @@ export function Contact() {
               variant={isEditing ? 'success' : 'primary'} 
               disabled={loading.form || loading.persons || loading.stores}
             >
-              {loading.form ? 'Processing...' : isEditing ? 'Update Contact' : 'Add Contact'}
+              {loading.form ? 'Processing...' : isEditing ? 'Update Contact' : ' ➕ Add Contact'}
             </Button>
             {isEditing && (
               <Button 

@@ -9,7 +9,7 @@ import {
   Table,
   Spinner
 } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Uom = () => {
@@ -31,16 +31,20 @@ const Uom = () => {
   const [singleUom, setSingleUom] = useState(null);
 
   useEffect(() => {
+    let didCancel = false
     const fetchData = async () => {
       try {
         const res = await fetch(apiUrl);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const result = await res.json();
-        setData(result.content || result || []);
+        if(!didCancel)setData(result.content || result || []);
       } catch (err) {
+        // console.log('error:',toast.error('fetch'))
         setError(err.message);
+        if(!didCancel)toast.error(`Failed to fetch movement types: ${err.message},${{toastId:"fetch-error"}}`);
+   
       } finally {
-        setLoading(false);
+        if(!didCancel)setLoading(false);
       }
     };
     fetchData();
@@ -155,16 +159,16 @@ const Uom = () => {
       </Container>
     );
 
-  if (error)
-    return (
-      <Container className="text-center mt-5 text-danger">
-        Error: {error}
-      </Container>
-    );
+  // if (error)
+  //   return (
+  //     <Container className="text-center mt-5 text-danger">
+  //       Error: {error}
+  //     </Container>
+  //   );
 
   return (
     <Container className="mt-4">
-      <ToastContainer />
+     
       <h2 className="mb-4 text-center">Unit of Measurement</h2>
 
       <Card className="p-4 shadow-sm mb-4">

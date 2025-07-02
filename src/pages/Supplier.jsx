@@ -39,6 +39,9 @@ const Supplier = () => {
         setSupplierData(data.content || []);
       } catch (err) {
         setError(err);
+        toast.error(err.message, { toastId: 'supplier-fetch-error' });
+        // toast.error(err.message)
+      
       } finally {
         setLoading(false);
       }
@@ -131,6 +134,7 @@ const Supplier = () => {
       setSingleSupplier(result);
       toast.success(`Fetched supplier: ${result.supName}`);
     } catch (err) {
+      setError(err)
       toast.error(err.message);
       setSingleSupplier(null);
     }
@@ -142,15 +146,15 @@ const Supplier = () => {
         <Spinner animation="border" variant="primary" />
       </Container>
     );
-  if (error) return <div>Error: {error.message}</div>;
+  // if (error) return <div>Error: {error.message}</div>;
 
   return (
     <Container className="mt-4">
-      <ToastContainer />
+
       <h2 className="text-center mb-4">Supplier Management</h2>
 
       <Card className="p-4 mb-4 shadow-sm">
-        <h5 className="text-center p-5">{isEditing ? 'Edit Supplier' : 'Add Supplier'} </h5>
+        <h5 className="text-info p-5">{isEditing ? 'Edit Supplier' : ' ➕ Add Supplier'} </h5>
         <Form onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Col md={6}>
@@ -209,7 +213,7 @@ const Supplier = () => {
             </Col>
           </Row>
           <Button type="submit" variant={isEditing ? 'success' : 'primary'}>
-            {isEditing ? 'Save Update' : 'Add Supplier'}
+            {isEditing ? 'Save Update' : ' ➕ Add Supplier'}
           </Button>{' '}
           {isEditing && (
             <Button

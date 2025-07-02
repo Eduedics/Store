@@ -210,7 +210,7 @@ function Employee() {
     // Main render
     return (
         <Container className="mt-4">
-            <ToastContainer position="top-right" autoClose={5000} />
+   
             <h2 className="text-center mb-4">Employee Management</h2>
 
             {error && (
@@ -245,7 +245,7 @@ function Employee() {
             </InputGroup>
 
             <Card className="p-4 shadow-sm mb-4">
-                <h4>{editing ? 'Edit Employee' : 'Add New Employee'}</h4>
+                <h4 className='text-info'>{editing ? 'Edit Employee' : ' ➕ Add New Employee'}</h4>
                 <Form onSubmit={handleSubmit}>
                     <Row>
                         <Col md={6}>
@@ -345,7 +345,7 @@ function Employee() {
                                     <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
                                     <span className="ms-2">Processing...</span>
                                 </>
-                            ) : editing ? 'Update Employee' : 'Add Employee'}
+                            ) : editing ? 'Update Employee' : ' ➕ Add Employee'}
                         </Button>
                         
                         {editing && (

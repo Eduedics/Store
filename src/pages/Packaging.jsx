@@ -10,7 +10,7 @@ import {
   Card,
   Spinner,
 } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Packaging() {
@@ -31,18 +31,19 @@ function Packaging() {
   const apiUrl = '/api/packaging';
 
   useEffect(() => {
+    let didCancel = false
     const fetchData = async () => {
       try {
         const res = await axios.get(apiUrl);
         const data = Array.isArray(res.data.content)
           ? res.data.content
           : res.data || [];
-        setPackagingData(data);
+        if(!didCancel)setPackagingData(data);
       } catch (err) {
         setError(err.message);
-        toast.error('Failed to fetch data');
+        if(!didCancel)toast.error('Failed to fetch data',{toastId:'fetch-error'});
       } finally {
-        setLoading(false);
+        if(!didCancel)setLoading(false);
       }
     };
     fetchData();
@@ -120,11 +121,11 @@ function Packaging() {
 
   return (
     <Container className="mt-4">
-      <ToastContainer />
+    
       <h3 className="text-center mb-4">Packaging Management</h3>
 
       <Card className="p-4 shadow-sm mb-4">
-        <h5>{editing ? 'Update Packaging' : 'Add New Packaging'}</h5>
+        <h5 className='text-info'>{editing ? 'Update Packaging' : ' ➕ Add New Packaging'}</h5>
         <Form onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Col md={6}>
@@ -164,7 +165,7 @@ function Packaging() {
 
           <div className="d-flex gap-2">
             <Button type="submit" variant={editing ? 'success' : 'primary'}>
-              {editing ? 'Save Update' : 'Add'}
+              {editing ? 'Save Update' : '➕ Add'}
             </Button>
             {editing && (
               <Button variant="secondary" onClick={resetForm}>

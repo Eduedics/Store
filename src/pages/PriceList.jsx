@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { Table, Button, Form, Container, Row, Col, Card, Spinner, InputGroup } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -310,7 +310,7 @@ const PriceList = ({ mode = 'pricelist' }) => {
   // Render functions
   const renderForm = () => (
     <Card className="p-4 shadow-sm mt-4">
-      <h4 className="mb-3">{isUpdateMode ? 'Update Entry' : 'add New Entry'}</h4>
+      <h4 className="mb-3 text-info">{isUpdateMode ? 'Update Entry' : ' ➕ add New Entry'}</h4>
       <Form onSubmit={handleSubmit}>
         <Row className="mb-3">
           <Col md={6}>
@@ -633,15 +633,15 @@ const PriceList = ({ mode = 'pricelist' }) => {
     </Container>
   );
 
-  if (error) return (
-    <Container className="mt-5">
-      <div className="alert alert-danger">Error: {error}</div>
-    </Container>
-  );
+  // if (error) return (
+  //   <Container className="mt-5">
+  //     <div className="alert alert-danger">Error: {error}</div>
+  //   </Container>
+  // );
 
   return (
     <Container className="mt-4">
-      <ToastContainer position="top-right" autoClose={5000} />
+      
       <h2 className="mb-4 text-center">
         {mode === 'pricelist' ? 'Price List Management' : 'Inventory Item Management'}
       </h2>

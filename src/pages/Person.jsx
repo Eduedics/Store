@@ -57,6 +57,7 @@ function Person() {
         setAllPersons(data);
       } catch (err) {
         setError(err.message);
+        toast.error('failed to fetch person data')
       } finally {
         setLoading(false);
       }
@@ -173,12 +174,12 @@ function Person() {
       </Container>
     );
 
-  if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
+  // if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
 
   
   return (
     <Container className="mt-4">
-      <ToastContainer />
+
       <h2 className="mb-4 text-center">Person Management</h2>
 
       <InputGroup className="mb-3">
@@ -190,7 +191,7 @@ function Person() {
       </InputGroup>
 
       <Card className="p-4 shadow-sm mt-4">
-        <h4 className="mb-3">{isUpdateMode ? 'Update Person' : 'Add New Person'}</h4>
+        <h4 className="mb-3 text-info">{isUpdateMode ? 'Update Person' : '➕ Add New Person'}</h4>
         <Form>
           <Row className="mb-3">
             <Col md={6}>

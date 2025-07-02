@@ -45,6 +45,7 @@ export default function Store() {
       setFilteredData(data.content || []);
     } catch (err) {
       setError(err);
+      toast.error(err.message)
     } finally {
       setLoading(false);
     }
@@ -172,11 +173,10 @@ export default function Store() {
       </Container>
     );
 
-  if (error) return <div style={{ color: 'red' }}>Error: {error.message}</div>;
+  // if (error) return <div style={{ color: 'red' }}>Error: {error.message}</div>;
 
   return (
     <Container className="mt-4">
-      <ToastContainer />
 
       <h2 className="mb-4 text-center"> Store Management</h2>
 
@@ -189,7 +189,7 @@ export default function Store() {
       </InputGroup>
 
       <Card className="p-4 shadow-sm mb-4">
-        <h4 className="text-center p-5">{isEditing ? ' Update Store' : ' Add New Store'}</h4>
+        <h4 className="text-info p-5">{isEditing ? ' Update Store' : ' ➕ Add New Store'}</h4>
         <Form onSubmit={handleFormSubmit}>
           <Row className="mb-3">
             <Col md={4}>

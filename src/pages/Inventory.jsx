@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Container, Table, Button, Form, Spinner, Alert } from 'react-bootstrap';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Inventory() {
@@ -44,7 +44,7 @@ function Inventory() {
             setInventoryData(Array.isArray(response.data) ? response.data : []);
         } catch (err) {
             setError(err.message);
-            toast.error('Failed to fetch inventory data');
+            toast.error(`${err.message},{toastId:'Failed to fetch inventory data'}`);
         } finally {
             setLoading(prev => ({ ...prev, inventory: false }));
         }
@@ -97,9 +97,8 @@ function Inventory() {
 
     return (
         <Container className="mt-4">
-            <ToastContainer position="top-right" autoClose={5000} />
-            <h2 className="mb-4 text-center bg-success
-            ">Inventory Management</h2>
+
+            <h2 className="mb-4 text-center ">Inventory Management</h2>
 
             {error && (
                 <Alert variant="danger" className="mb-4">
