@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { Container, Table, Card, Spinner, Form, InputGroup, Button } from 'react-bootstrap';
 
 const AuditTrail = () => {
@@ -29,6 +30,7 @@ const AuditTrail = () => {
         setFilteredData(fetchedData);
       } catch (err) {
         setError(err.message);
+        toast.error(err.message)
       } finally {
         setLoading(false);
       }
@@ -61,12 +63,12 @@ const AuditTrail = () => {
       </Container>
     );
 
-  if (error)
-    return (
-      <Container className="mt-5 text-center text-danger">
-        <h4>Error: {error}</h4>
-      </Container>
-    );
+  // if (error)
+  //   return (
+  //     <Container className="mt-5 text-center text-danger">
+  //       <h4>Error: {error}</h4>
+  //     </Container>
+  //   );
 
   return (
     <Container className="mt-4">
@@ -90,7 +92,7 @@ const AuditTrail = () => {
             </tr>
           </thead>
           <tbody>
-            {currentRows.map((item) => (
+            {auditData.map((item) => (
               <tr key={item.id}>
                 <td>{item.id}</td>
                 <td>{item.name}</td>
@@ -99,7 +101,8 @@ const AuditTrail = () => {
             ))}
           </tbody>
         </Table>
-
+        
+        {filteredData.length > rowsPerPage && (
         <div className="d-flex justify-content-between mt-3">
           <Button
             variant="secondary"
@@ -117,6 +120,7 @@ const AuditTrail = () => {
             Next
           </Button>
         </div>
+      )}
       </Card>
     </Container>
   );
