@@ -12,20 +12,47 @@ import Packaging from './pages/Packaging.jsx'
 import Employee from './pages/Employee.jsx'
 import Stock from './pages/StockEntries.jsx'
 import Inventory from './pages/Inventory.jsx'
+import Dashboard from './pages/Dashboard.jsx'
 
-import Navbar from './components/SideBar.jsx';
+import Sidebar from './components/SideBar.jsx';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
+import { ToastContainer } from 'react-toastify';
 
 import './App.css'
-import Contact from './pages/Contact.jsx';
 
+import Contact from './pages/Contact.jsx';
+import { useState } from 'react';
 function App() {
-  
+  const [isOpen, setisOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setisOpen(!isOpen);
+  };
 
   return (
     <>
       <Router>
+        <div className="app-container">
+        <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+         <div className={`main-content ${isOpen ? 'expanded' : ''}`}>
+          <Header toggleSidebar={toggleSidebar} />
+          <div className="content">
+            <ToastContainer 
+              position="top-right"
+              autoClose={1000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
+            />
         <Routes>
+          <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path="/uom" element={<Uom/>} />
           <Route path="/supplier" element={<Supplier/>} />
           <Route path="/store" element={<Store/>} />
@@ -39,12 +66,14 @@ function App() {
           <Route path = '/contact' element = {<Contact />} />
           <Route path ='/employee' element = {<Employee/>} />
           <Route path = '/stock' element = {<Stock />} />
-          <Route path ='sidebar' element = {<Navbar />} />
           <Route path = '/inventory' element = {<Inventory />} />
-         
-        
         </Routes>
-      </Router>
+      </div>
+      <Footer/>
+      </div>
+      </div>
+        </Router>
+      
     </>
   )
 }
