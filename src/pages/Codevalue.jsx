@@ -38,6 +38,7 @@ export default function Codevalue() {
     setLoading(true);
     try {
       const response = await fetch(apiUrl);
+      
       if (!response.ok) throw new Error('Network response was not ok');
       const data = await response.json();
       const list = Array.isArray(data.content) ? data.content : data || [];
@@ -46,13 +47,15 @@ export default function Codevalue() {
       setFilteredData(list);
     } catch (error) {
       setError(error.message);
-      toast.error(error.message);
+      // console.log('error:',error.message)
+      toast.error('failed to fetch codevalue data');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    console.log('error',error)
     fetchCodeValues();
   }, []);
 
@@ -156,7 +159,7 @@ export default function Codevalue() {
 
   return (
     <Container className="mt-4">
-      <ToastContainer />
+ 
       <h2 className="text-center mb-4">Code Value Management</h2>
     <InputGroup className="mb-3">
         <Form.Control
@@ -209,7 +212,7 @@ export default function Codevalue() {
           </Row>
           <div className="d-flex gap-2">
             <Button type="submit" variant={isEditing ? 'success' : 'primary'}>
-              {isEditing ? 'Save Update' : 'Add New'}
+              {isEditing ? 'Save Update' : '➕ Add New'}
             </Button>
             {isEditing && (
               <Button type="button" variant="secondary" onClick={handleCancelUpdate}>
