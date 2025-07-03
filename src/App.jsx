@@ -52,7 +52,7 @@ function App() {
               theme="colored"
             />
         <Routes>
-          <Route path='/dashboard' element={<Dashboard/>}/>
+          <Route path='/' element={<Dashboard/>}/>
           <Route path="/uom" element={<Uom/>} />
           <Route path="/supplier" element={<Supplier/>} />
           <Route path="/store" element={<Store/>} />
