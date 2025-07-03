@@ -30,7 +30,7 @@ function SideBar({ isOpen, toggleSidebar }) {
             <div className="menu-item active">
               <i className="fas fa-home"></i>
               <div className="menu-item">
-                  <NavLink to="/dashboard" className="menu-item active">
+                  <NavLink to="/" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>Dashboard</span>
                   </NavLink>
                 </div>
@@ -50,61 +50,61 @@ function SideBar({ isOpen, toggleSidebar }) {
             {openSection.product && (
               <div className="section-content">
                 <div className="menu-item">
-                  <NavLink to="/uom" className="menu-item active">
+                  <NavLink to="/uom" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>Uom</span>
                   </NavLink>
                 </div>
                 
                 <div className="menu-item">
-                  <NavLink to="/sequence" className="menu-item active">
+                  <NavLink to="/sequence" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>Sequence</span>
                   </NavLink>
                 </div>
 
                 <div className="menu-item">
-                  <NavLink to="/store" className="menu-item active">
+                  <NavLink to="/store" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>store</span>
                   </NavLink>
                 </div>
 
                 <div className="menu-item">
-                  <NavLink to="/codevalue" className="menu-item active">
+                  <NavLink to="/codevalue" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>CodeValue</span>
                   </NavLink>
                 </div>
 
                 <div className="menu-item">
-                  <NavLink to="/pricelist" className="menu-item active">
+                  <NavLink to="/pricelist" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>PriceList</span>
                   </NavLink>
                 </div>
 
                 <div className="menu-item">
-                  <NavLink to="/item" className="menu-item active">
+                  <NavLink to="/item" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>Items</span>
                   </NavLink>
                 </div>
 
                 <div className="menu-item">
-                  <NavLink to="/audit" className="menu-item active">
+                  <NavLink to="/audit" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>Audits</span>
                   </NavLink>
                 </div>
 
                 <div className="menu-item">
-                  <NavLink to="/packaging" className="menu-item active">
+                  <NavLink to="/packaging" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>Packaging</span>
                   </NavLink>
                 </div>
 
                 <div className="menu-item">
-                  <NavLink to="/stock" className="menu-item active">
+                  <NavLink to="/stock" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>Stock</span>
                   </NavLink>
                 </div>
 
                 <div className="menu-item">
-                  <NavLink to="/inventory" className="menu-item active">
+                  <NavLink to="/inventory" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>Inventory</span>
                   </NavLink>
                 </div>
@@ -126,25 +126,25 @@ function SideBar({ isOpen, toggleSidebar }) {
             {openSection.product && (
               <div className="section-content">
                 <div className="menu-item">
-                  <NavLink to="/supplier" className="menu-item active">
+                  <NavLink to="/supplier" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>Suppliers</span>
                   </NavLink>
                 </div>
                 
                 <div className="menu-item">
-                  <NavLink to="/person" className="menu-item active">
+                  <NavLink to="/person" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>Persons</span>
                   </NavLink>
                 </div>
                 
                 <div className="menu-item">
-                  <NavLink to="/contact" className="menu-item active">
+                  <NavLink to="/contact" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>Contacts</span>
                   </NavLink>
                 </div>
 
                 <div className="menu-item">
-                  <NavLink to="/employee" className="menu-item active">
+                  <NavLink to="/employee" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
                     <span>Employees</span>
                   </NavLink>
                 </div>
@@ -159,16 +159,24 @@ function SideBar({ isOpen, toggleSidebar }) {
 
           <div className="menu-section">
             <div className="menu-item">
-              <i className="fas fa-question-circle"></i>
-              <span>Help Center</span>
+              
+              <NavLink to="/help" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
+                <i className="fas fa-question-circle me-2 "></i>
+                <span>Help Center</span>
+              </NavLink>
+              
             </div>
             <div className="menu-item">
-              <i className="fa-solid fa-right-to-bracket"></i>
-              <span>Logout</span>
+              <NavLink to="/logout" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
+                <i className="fa-solid fa-right-to-bracket me-2"></i>
+                <span>Logout</span>
+              </NavLink>
             </div>
             <div className="menu-item">
-              <i className="fa-solid fa-gear"></i>
-              <span>Settings</span>
+              <NavLink to="/settings" className={({isActive})=>isActive? 'nav-active':'menu-item active'}>
+                <i className="fa-solid fa-gear me-2"></i>
+                <span>Settings</span>
+              </NavLink>
             </div>
           </div>
         </div>
