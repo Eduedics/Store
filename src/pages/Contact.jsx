@@ -552,169 +552,179 @@ export function Contact() {
   };
 
   return (
-    <Container className="mt-4">
-      <h2 className="text-center mb-4">Contact Management</h2>
+  <Container className="mt-4">
+    <h2 className="text-center mb-4">Contact Management</h2>
 
-      <InputGroup className="mb-3">
-        <Form.Control
-          placeholder="Search by email or name..."
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-            setCurrentPage(1);
-          }}
-        />
-        <Form.Select
-          value={rowsPerPage}
-          onChange={(e) => {
-            setRowsPerPage(Number(e.target.value));
-            setCurrentPage(1);
-          }}
-          style={{ maxWidth: '150px', marginLeft: '1rem' }}
-        >
-          <option value={5}>5 rows</option>
-          <option value={10}>10 rows</option>
-          <option value={20}>20 rows</option>
-        </Form.Select>
-      </InputGroup>
+    <InputGroup className="mb-3 flex-column flex-md-row align-items-stretch">
+      <Form.Control
+        placeholder="Search by email or name..."
+        value={searchQuery}
+        onChange={(e) => {
+          setSearchQuery(e.target.value);
+          setCurrentPage(1);
+        }}
+      />
+      <Form.Select
+        value={rowsPerPage}
+        onChange={(e) => {
+          setRowsPerPage(Number(e.target.value));
+          setCurrentPage(1);
+        }}
+        className="mt-2 mt-md-0 ms-md-2"
+        style={{ maxWidth: '150px' }}
+      >
+        <option value={5}>5 rows</option>
+        <option value={10}>10 rows</option>
+        <option value={20}>20 rows</option>
+      </Form.Select>
+    </InputGroup>
 
-      <Card className="p-4 shadow-sm mb-4">
-        <h4 className='text-info'>{isEditing ? 'Update Contact' : ' ➕ Add New Contact'}</h4>
-        <Form onSubmit={handleSubmit}>
-          <Row>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  disabled={loading.form}
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Telephone</Form.Label>
-                <Form.Control
-                  type="tel"
-                  name="telNo"
-                  value={formData.telNo}
-                  onChange={handleChange}
-                  required
-                  disabled={loading.form}
-                />
-              </Form.Group>
-            </Col>
-
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Identification No</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="identificationNo"
-                  value={formData.identificationNo}
-                  onChange={handleChange}
-                  required
-                  disabled={loading.form}
-                />
-              </Form.Group>
-            </Col>
-
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Person</Form.Label>
-                <Form.Select
-                  value={formData.personData.id || ''}
-                  onChange={(e) => handlePersonSelect(Number(e.target.value))}
-                  disabled={loading.persons || loading.form}
-                >
-                  <option value="">Select Person</option>
-                  {personOptions.map(person => (
-                    <option key={person.id} value={person.id}>
-                      {person.name} ({person.personType})
-                    </option>
-                  ))}
-                </Form.Select>
-                {loading.persons && <small>Loading persons...</small>}
-              </Form.Group>
-            </Col>
-
-            <Col md={6}>
-              <Form.Check
-                type="checkbox"
-                label="Person Active"
-                name="personData.active"
-                checked={formData.personData.active}
-                onChange={handleCheckboxChange}
+    <Card className="p-4 shadow-sm mb-4">
+      <h4 className="text-info">
+        {isEditing ? 'Update Contact' : ' ➕ Add New Contact'}
+      </h4>
+      <Form onSubmit={handleSubmit}>
+        <Row>
+          <Col xs={12} md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
                 disabled={loading.form}
               />
-            </Col>
-
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Store</Form.Label>
-                <Form.Select
-                  value={formData.storeData.id || ''}
-                  onChange={(e) => handleStoreSelect(Number(e.target.value))}
-                  disabled={loading.stores || loading.form}
-                >
-                  <option value="">Select Store</option>
-                  {storeOptions.map(store => (
-                    <option key={store.id} value={store.id}>
-                      {store.storeName} ({store.storeLocation})
-                    </option>
-                  ))}
-                </Form.Select>
-                {loading.stores && <small>Loading stores...</small>}
-              </Form.Group>
-            </Col>
-
-            <Col md={6}>
-              <Form.Check
-                type="checkbox"
-                label="Store Active"
-                name="storeData.active"
-                checked={formData.storeData.active}
-                onChange={handleCheckboxChange}
+            </Form.Group>
+          </Col>
+          <Col xs={12} md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Telephone</Form.Label>
+              <Form.Control
+                type="tel"
+                name="telNo"
+                value={formData.telNo}
+                onChange={handleChange}
+                required
                 disabled={loading.form}
               />
-            </Col>
-          </Row>
+            </Form.Group>
+          </Col>
 
-          <div className="d-flex gap-2">
-            <Button 
-              type="submit" 
-              variant={isEditing ? 'success' : 'primary'} 
-              disabled={loading.form || loading.persons || loading.stores}
-            >
-              {loading.form ? 'Processing...' : isEditing ? 'Update Contact' : ' ➕ Add Contact'}
-            </Button>
-            {isEditing && (
-              <Button 
-                type="button" 
-                variant="secondary" 
-                onClick={resetForm} 
+          <Col xs={12} md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Identification No</Form.Label>
+              <Form.Control
+                type="number"
+                name="identificationNo"
+                value={formData.identificationNo}
+                onChange={handleChange}
+                required
                 disabled={loading.form}
+              />
+            </Form.Group>
+          </Col>
+
+          <Col xs={12} md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Person</Form.Label>
+              <Form.Select
+                value={formData.personData.id || ''}
+                onChange={(e) => handlePersonSelect(Number(e.target.value))}
+                disabled={loading.persons || loading.form}
               >
-                Cancel
-              </Button>
-            )}
-          </div>
-        </Form>
-      </Card>
+                <option value="">Select Person</option>
+                {personOptions.map((person) => (
+                  <option key={person.id} value={person.id}>
+                    {person.name} ({person.personType})
+                  </option>
+                ))}
+              </Form.Select>
+              {loading.persons && <small>Loading persons...</small>}
+            </Form.Group>
+          </Col>
 
-      <Card className="p-3">
-        <h5>Contact List</h5>
-        {loading.contacts ? (
-          <div className="text-center my-4">
-            <Spinner animation="border" />
-          </div>
-        ) : (
-          <>
-            <Table striped bordered hover responsive>
+          <Col xs={12} md={6}>
+            <Form.Check
+              type="checkbox"
+              label="Person Active"
+              name="personData.active"
+              checked={formData.personData.active}
+              onChange={handleCheckboxChange}
+              disabled={loading.form}
+              className="mb-3"
+            />
+          </Col>
+
+          <Col xs={12} md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Store</Form.Label>
+              <Form.Select
+                value={formData.storeData.id || ''}
+                onChange={(e) => handleStoreSelect(Number(e.target.value))}
+                disabled={loading.stores || loading.form}
+              >
+                <option value="">Select Store</option>
+                {storeOptions.map((store) => (
+                  <option key={store.id} value={store.id}>
+                    {store.storeName} ({store.storeLocation})
+                  </option>
+                ))}
+              </Form.Select>
+              {loading.stores && <small>Loading stores...</small>}
+            </Form.Group>
+          </Col>
+
+          <Col xs={12} md={6}>
+            <Form.Check
+              type="checkbox"
+              label="Store Active"
+              name="storeData.active"
+              checked={formData.storeData.active}
+              onChange={handleCheckboxChange}
+              disabled={loading.form}
+              className="mb-3"
+            />
+          </Col>
+        </Row>
+
+        <div className="d-flex flex-column flex-sm-row gap-2">
+          <Button
+            type="submit"
+            variant={isEditing ? 'success' : 'primary'}
+            disabled={loading.form || loading.persons || loading.stores}
+          >
+            {loading.form
+              ? 'Processing...'
+              : isEditing
+              ? 'Update Contact'
+              : ' ➕ Add Contact'}
+          </Button>
+          {isEditing && (
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={resetForm}
+              disabled={loading.form}
+            >
+              Cancel
+            </Button>
+          )}
+        </div>
+      </Form>
+    </Card>
+
+    <Card className="p-3">
+      <h5>Contact List</h5>
+      {loading.contacts ? (
+        <div className="text-center my-4">
+          <Spinner animation="border" />
+        </div>
+      ) : (
+        <>
+          <div className="table-responsive">
+            <Table striped bordered hover>
               <thead>
                 <tr>
                   <th>Email</th>
@@ -730,18 +740,18 @@ export function Contact() {
                     <td>{c.personData?.name}</td>
                     <td>{c.storeData?.storeName}</td>
                     <td>
-                      <Button 
-                        size="sm" 
-                        variant="info" 
-                        onClick={() => handleEdit(c)} 
+                      <Button
+                        size="sm"
+                        variant="info"
+                        onClick={() => handleEdit(c)}
                         className="me-2"
                         disabled={loading.form}
                       >
                         Edit
                       </Button>
-                      <Button 
-                        size="sm" 
-                        variant="danger" 
+                      <Button
+                        size="sm"
+                        variant="danger"
                         onClick={() => handleDelete(c.id)}
                         disabled={loading.form}
                       >
@@ -752,33 +762,36 @@ export function Contact() {
                 ))}
               </tbody>
             </Table>
+          </div>
 
-            {filteredData.length > rowsPerPage && (
-              <div className="d-flex justify-content-between align-items-center">
-                <Button
-                  variant="outline-secondary"
-                  disabled={currentPage === 1 || loading.contacts}
-                  onClick={() => setCurrentPage((prev) => prev - 1)}
-                >
-                  Previous
-                </Button>
-                <span>
-                  Page {currentPage} of {totalPages} ({filteredData.length} items)
-                </span>
-                <Button
-                  variant="outline-secondary"
-                  disabled={currentPage === totalPages || loading.contacts}
-                  onClick={() => setCurrentPage((prev) => prev + 1)}
-                >
-                  Next
-                </Button>
-              </div>
-            )}
-          </>
-        )}
-      </Card>
-    </Container>
-  );
+          {filteredData.length > rowsPerPage && (
+            <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2 mt-3">
+              <Button
+                variant="outline-secondary"
+                disabled={currentPage === 1 || loading.contacts}
+                onClick={() => setCurrentPage((prev) => prev - 1)}
+              >
+                Previous
+              </Button>
+              <span>
+                Page {currentPage} of {totalPages} ({filteredData.length} items)
+              </span>
+              <Button
+                variant="outline-secondary"
+                disabled={currentPage === totalPages || loading.contacts}
+                onClick={() => setCurrentPage((prev) => prev + 1)}
+              >
+                Next
+              </Button>
+            </div>
+          )}
+        </>
+      )}
+    </Card>
+  </Container>
+);
+
+
 }
 
 export default Contact;

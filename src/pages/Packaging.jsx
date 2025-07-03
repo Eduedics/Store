@@ -120,63 +120,63 @@ function Packaging() {
   }
 
   return (
-    <Container className="mt-4">
-    
-      <h3 className="text-center mb-4">Packaging Management</h3>
+  <Container className="mt-4">
+    <h3 className="text-center mb-4">Packaging Management</h3>
 
-      <Card className="p-4 shadow-sm mb-4">
-        <h5 className='text-info'>{editing ? 'Update Packaging' : ' ➕ Add New Packaging'}</h5>
-        <Form onSubmit={handleSubmit}>
-          <Row className="mb-3">
-            <Col md={6}>
-              <Form.Group>
-                <Form.Label>Package Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="pkgName"
-                  value={formData.pkgName}
-                  onChange={handleChange}
-                  placeholder="Enter name"
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group>
-                <Form.Label>Package Symbol</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="pkgSymbol"
-                  value={formData.pkgSymbol}
-                  onChange={handleChange}
-                  placeholder="Enter symbol"
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6} className="mt-3">
-              <Form.Check
-                type="checkbox"
-                label="Active"
-                name="active"
-                checked={formData.active}
+    <Card className="p-4 shadow-sm mb-4">
+      <h5 className="text-info">{editing ? 'Update Packaging' : ' ➕ Add New Packaging'}</h5>
+      <Form onSubmit={handleSubmit}>
+        <Row className="mb-3">
+          <Col xs={12} md={6}>
+            <Form.Group>
+              <Form.Label>Package Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="pkgName"
+                value={formData.pkgName}
                 onChange={handleChange}
+                placeholder="Enter name"
               />
-            </Col>
-          </Row>
+            </Form.Group>
+          </Col>
+          <Col xs={12} md={6}>
+            <Form.Group>
+              <Form.Label>Package Symbol</Form.Label>
+              <Form.Control
+                type="text"
+                name="pkgSymbol"
+                value={formData.pkgSymbol}
+                onChange={handleChange}
+                placeholder="Enter symbol"
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={12} md={6} className="mt-3">
+            <Form.Check
+              type="checkbox"
+              label="Active"
+              name="active"
+              checked={formData.active}
+              onChange={handleChange}
+            />
+          </Col>
+        </Row>
 
-          <div className="d-flex gap-2">
-            <Button type="submit" variant={editing ? 'success' : 'primary'}>
-              {editing ? 'Save Update' : '➕ Add'}
+        <div className="d-flex flex-column flex-sm-row gap-2">
+          <Button type="submit" variant={editing ? 'success' : 'primary'}>
+            {editing ? 'Save Update' : '➕ Add'}
+          </Button>
+          {editing && (
+            <Button variant="secondary" onClick={resetForm}>
+              ❌ Cancel
             </Button>
-            {editing && (
-              <Button variant="secondary" onClick={resetForm}>
-                ❌ Cancel
-              </Button>
-            )}
-          </div>
-        </Form>
-      </Card>
+          )}
+        </div>
+      </Form>
+    </Card>
 
-      <Table striped bordered hover responsive>
+    <div className="table-responsive">
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>ID</th>
@@ -214,30 +214,31 @@ function Packaging() {
           ))}
         </tbody>
       </Table>
+    </div>
 
-      {/* Pagination Controls */}
-      <div className="d-flex justify-content-between mb-4">
-        <Button
-          variant="secondary"
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-        >
-          Previous
-        </Button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <Button
-          variant="secondary"
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-        >
-          Next
-        </Button>
-      </div>
-    </Container>
+    {/* Pagination Controls */}
+    <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2 mb-4">
+      <Button
+        variant="secondary"
+        disabled={currentPage === 1}
+        onClick={() => setCurrentPage((prev) => prev - 1)}
+      >
+        Previous
+      </Button>
+      <span>
+        Page {currentPage} of {totalPages}
+      </span>
+      <Button
+        variant="secondary"
+        disabled={currentPage === totalPages}
+        onClick={() => setCurrentPage((prev) => prev + 1)}
+      >
+        Next
+      </Button>
+    </div>
+  </Container>
+);
 
-  );
 }
 
 export default Packaging;

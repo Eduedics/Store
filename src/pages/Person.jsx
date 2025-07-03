@@ -178,77 +178,77 @@ function Person() {
 
   
   return (
-    <Container className="mt-4">
+  <Container className="mt-4">
+    <h2 className="mb-4 text-center">Person Management</h2>
 
-      <h2 className="mb-4 text-center">Person Management</h2>
+    <InputGroup className="mb-3">
+      <Form.Control
+        placeholder="Search by name..."
+        value={searchQuery}
+        onChange={handleSearch}
+      />
+    </InputGroup>
 
-      <InputGroup className="mb-3">
-        <Form.Control
-          placeholder="Search by name..."
-          value={searchQuery}
-          onChange={handleSearch}
-        />
-      </InputGroup>
+    <Card className="p-4 shadow-sm mt-4">
+      <h4 className="mb-3 text-info">{isUpdateMode ? 'Update Person' : '➕ Add New Person'}</h4>
+      <Form>
+        <Row className="mb-3">
+          <Col xs={12} md={6}>
+            <Form.Group>
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter name"
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={12} md={6}>
+            <Form.Group>
+              <Form.Label>Person Type</Form.Label>
+              <Form.Control
+                type="text"
+                name="personType"
+                value={formData.personType}
+                onChange={handleChange}
+                placeholder="Enter person type"
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={12} md={6} className="mt-3">
+            <Form.Group>
+              <Form.Check
+                type="checkbox"
+                label="Active"
+                name="active"
+                checked={formData.active}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
 
-      <Card className="p-4 shadow-sm mt-4">
-        <h4 className="mb-3 text-info">{isUpdateMode ? 'Update Person' : '➕ Add New Person'}</h4>
-        <Form>
-          <Row className="mb-3">
-            <Col md={6}>
-              <Form.Group>
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Enter name"
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group>
-                <Form.Label>Person Type</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="personType"
-                  value={formData.personType}
-                  onChange={handleChange}
-                  placeholder="Enter person type"
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group>
-                <Form.Check
-                  type="checkbox"
-                  label="Active"
-                  name="active"
-                  checked={formData.active}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-
-          <div className="d-flex gap-2">
-            <Button
-              type="button"
-              variant={isUpdateMode ? 'success' : 'primary'}
-              onClick={isUpdateMode ? handleUpdate : handleAdd}
-            >
-              {isUpdateMode ? '💾 Save Update' : '➕ Add New'}
+        <div className="d-flex flex-column flex-sm-row gap-2">
+          <Button
+            type="button"
+            variant={isUpdateMode ? 'success' : 'primary'}
+            onClick={isUpdateMode ? handleUpdate : handleAdd}
+          >
+            {isUpdateMode ? '💾 Save Update' : '➕ Add New'}
+          </Button>
+          {isUpdateMode && (
+            <Button type="button" variant="secondary" onClick={clearForm}>
+              ❌ Cancel
             </Button>
-            {isUpdateMode && (
-              <Button type="button" variant="secondary" onClick={clearForm}>
-                ❌ Cancel
-              </Button>
-            )}
-          </div>
-        </Form>
-      </Card>
+          )}
+        </div>
+      </Form>
+    </Card>
 
-      <Table striped bordered hover className="mt-4">
+    <div className="table-responsive mt-4">
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>ID</th>
@@ -270,20 +270,23 @@ function Person() {
                   size="sm"
                   variant="info"
                   onClick={() => handleGetById(p.id)}
+                  className="me-1 mb-1"
                 >
                   Info
-                </Button>{' '}
+                </Button>
                 <Button
                   variant="primary"
                   size="sm"
                   onClick={() => handleEditClick(p)}
+                  className="me-1 mb-1"
                 >
                   Edit
-                </Button>{' '}
+                </Button>
                 <Button
                   variant="danger"
                   size="sm"
                   onClick={() => handleDelete(p.id)}
+                  className="mb-1"
                 >
                   Delete
                 </Button>
@@ -292,41 +295,43 @@ function Person() {
           ))}
         </tbody>
       </Table>
+    </div>
 
-      <div className="d-flex justify-content-between mb-4">
-        <Button
-          variant="secondary"
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-        >
-          Previous
-        </Button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <Button
-          variant="secondary"
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-        >
-          Next
-        </Button>
-      </div>
+    <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2 mb-4">
+      <Button
+        variant="secondary"
+        disabled={currentPage === 1}
+        onClick={() => setCurrentPage((prev) => prev - 1)}
+      >
+        Previous
+      </Button>
+      <span>
+        Page {currentPage} of {totalPages}
+      </span>
+      <Button
+        variant="secondary"
+        disabled={currentPage === totalPages}
+        onClick={() => setCurrentPage((prev) => prev + 1)}
+      >
+        Next
+      </Button>
+    </div>
 
-      {singlePerson && (
-        <Card className="p-4 shadow-sm mb-4">
-          <h5>📌 Selected Person Detail</h5>
-          <p><strong>ID:</strong> {singlePerson.id}</p>
-          <p><strong>Name:</strong> {singlePerson.name}</p>
-          <p><strong>Person Type:</strong> {singlePerson.personType}</p>
-          <p><strong>Active:</strong> {singlePerson.active ? 'Yes' : 'No'}</p>
-          <Button variant="secondary" onClick={() => setSinglePerson(null)}>
-           ❌ Close
-          </Button>
-        </Card>
-      )}
-    </Container>
-  );
+    {singlePerson && (
+      <Card className="p-4 shadow-sm mb-4">
+        <h5>📌 Selected Person Detail</h5>
+        <p><strong>ID:</strong> {singlePerson.id}</p>
+        <p><strong>Name:</strong> {singlePerson.name}</p>
+        <p><strong>Person Type:</strong> {singlePerson.personType}</p>
+        <p><strong>Active:</strong> {singlePerson.active ? 'Yes' : 'No'}</p>
+        <Button variant="secondary" onClick={() => setSinglePerson(null)}>
+          ❌ Close
+        </Button>
+      </Card>
+    )}
+  </Container>
+);
+
 }
 
 export default Person;

@@ -157,73 +157,76 @@ export default function Codevalue() {
       </Container>
     );
 
-  return (
-    <Container className="mt-4">
- 
-      <h2 className="text-center mb-4">Code Value Management</h2>
-    <InputGroup className="mb-3">
-        <Form.Control
-          placeholder="Search by code type..."
-          value={searchQuery}
-          onChange={handleSearch}
-        />
-      </InputGroup>
-      <Card className="p-4 shadow-sm mb-4">
-        <Form onSubmit={handleSubmit}>
-          <Row className="mb-3">
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label>Code Type</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="codeType"
-                  value={formData.codeType}
-                  onChange={handleChange}
-                  required
-                  placeholder="Enter code type"
-                />
-              </Form.Group>
-            </Col>
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label>Code Value</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="codeValue"
-                  value={formData.codeValue}
-                  onChange={handleChange}
-                  required
-                  placeholder="Enter code value"
-                />
-              </Form.Group>
-            </Col>
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label>Active</Form.Label>
-                <Form.Check
-                  type="checkbox"
-                  name="active"
-                  label="Is Active"
-                  checked={formData.active}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <div className="d-flex gap-2">
-            <Button type="submit" variant={isEditing ? 'success' : 'primary'}>
-              {isEditing ? 'Save Update' : '➕ Add New'}
-            </Button>
-            {isEditing && (
-              <Button type="button" variant="secondary" onClick={handleCancelUpdate}>
-                ❌ Cancel
-              </Button>
-            )}
-          </div>
-        </Form>
-      </Card>
+ return (
+  <Container className="mt-4">
+    <h2 className="text-center mb-4">Code Value Management</h2>
 
-      <Card className="p-4 shadow-sm">
+    <InputGroup className="mb-3">
+      <Form.Control
+        placeholder="Search by code type..."
+        value={searchQuery}
+        onChange={handleSearch}
+      />
+    </InputGroup>
+
+    <Card className="p-4 shadow-sm mb-4">
+      <Form onSubmit={handleSubmit}>
+        <Row className="mb-3">
+          <Col xs={12} md={4} className="mb-3 mb-md-0">
+            <Form.Group>
+              <Form.Label>Code Type</Form.Label>
+              <Form.Control
+                type="text"
+                name="codeType"
+                value={formData.codeType}
+                onChange={handleChange}
+                required
+                placeholder="Enter code type"
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={12} md={4} className="mb-3 mb-md-0">
+            <Form.Group>
+              <Form.Label>Code Value</Form.Label>
+              <Form.Control
+                type="text"
+                name="codeValue"
+                value={formData.codeValue}
+                onChange={handleChange}
+                required
+                placeholder="Enter code value"
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={12} md={4}>
+            <Form.Group>
+              <Form.Label>Active</Form.Label>
+              <Form.Check
+                type="checkbox"
+                name="active"
+                label="Is Active"
+                checked={formData.active}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <div className="d-flex flex-column flex-sm-row gap-2">
+          <Button type="submit" variant={isEditing ? 'success' : 'primary'}>
+            {isEditing ? 'Save Update' : '➕ Add New'}
+          </Button>
+          {isEditing && (
+            <Button type="button" variant="secondary" onClick={handleCancelUpdate}>
+              ❌ Cancel
+            </Button>
+          )}
+        </div>
+      </Form>
+    </Card>
+
+    <Card className="p-4 shadow-sm">
+      <div className="table-responsive">
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -261,25 +264,27 @@ export default function Codevalue() {
             ))}
           </tbody>
         </Table>
+      </div>
 
-        <div className="d-flex justify-content-between mt-3">
-          <Button
-            variant="secondary"
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage((prev) => prev - 1)}
-          >
-            Previous
-          </Button>
-          <span>Page {currentPage} of {totalPages}</span>
-          <Button
-            variant="secondary"
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((prev) => prev + 1)}
-          >
-            Next
-          </Button>
-        </div>
-      </Card>
-    </Container>
-  );
+      <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2 mt-3">
+        <Button
+          variant="secondary"
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage((prev) => prev - 1)}
+        >
+          Previous
+        </Button>
+        <span>Page {currentPage} of {totalPages}</span>
+        <Button
+          variant="secondary"
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+        >
+          Next
+        </Button>
+      </div>
+    </Card>
+  </Container>
+);
+
 }

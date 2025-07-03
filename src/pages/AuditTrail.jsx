@@ -70,19 +70,20 @@ const AuditTrail = () => {
   //     </Container>
   //   );
 
-  return (
-    <Container className="mt-4">
-      <h2 className="mb-4 text-center">Audit Trail</h2>
+return (
+  <Container className="mt-4">
+    <h2 className="mb-4 text-center">Audit Trail</h2>
 
-      <InputGroup className="mb-3">
-        <Form.Control
-          placeholder="Search by name..."
-          value={searchQuery}
-          onChange={handleSearch}
-        />
-      </InputGroup>
+    <InputGroup className="mb-3">
+      <Form.Control
+        placeholder="Search by name..."
+        value={searchQuery}
+        onChange={handleSearch}
+      />
+    </InputGroup>
 
-      <Card className="p-4 shadow-sm">
+    <Card className="p-3 shadow-sm">
+      <div className="table-responsive">
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -101,9 +102,10 @@ const AuditTrail = () => {
             ))}
           </tbody>
         </Table>
-        
-        {filteredData.length > rowsPerPage && (
-        <div className="d-flex justify-content-between mt-3">
+      </div>
+
+      {filteredData.length > rowsPerPage && (
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 mt-3">
           <Button
             variant="secondary"
             disabled={currentPage === 1}
@@ -121,9 +123,11 @@ const AuditTrail = () => {
           </Button>
         </div>
       )}
-      </Card>
-    </Container>
-  );
+    </Card>
+  </Container>
+);
+
+
 };
 
 export default AuditTrail;

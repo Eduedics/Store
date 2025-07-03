@@ -209,251 +209,273 @@ function Employee() {
 
     // Main render
     return (
-        <Container className="mt-4">
-   
-            <h2 className="text-center mb-4">Employee Management</h2>
+  <Container className="mt-4">
+    <h2 className="text-center mb-4">Employee Management</h2>
 
-            {error && (
-                <Alert variant="danger" className="mb-4">
-                    {typeof error === 'string' ? error : error.message}
-                </Alert>
-            )}
+    {error && (
+      <Alert variant="danger" className="mb-4">
+        {typeof error === 'string' ? error : error.message}
+      </Alert>
+    )}
 
-            <InputGroup className="mb-3">
-                <Form.Control
-                    placeholder="Search by name or employee number..."
-                    value={searchQuery}
-                    onChange={(e) => {
-                        setSearchQuery(e.target.value);
-                        setCurrentPage(1);
-                    }}
-                    disabled={loading.employees}
+    <InputGroup className="mb-3 flex-column flex-md-row align-items-stretch">
+      <Form.Control
+        placeholder="Search by name or employee number..."
+        value={searchQuery}
+        onChange={(e) => {
+          setSearchQuery(e.target.value);
+          setCurrentPage(1);
+        }}
+        disabled={loading.employees}
+      />
+      <Form.Select
+        value={rowsPerPage}
+        onChange={(e) => {
+          setRowsPerPage(Number(e.target.value));
+          setCurrentPage(1);
+        }}
+        className="mt-2 mt-md-0 ms-md-2"
+        style={{ maxWidth: '150px' }}
+        disabled={loading.employees}
+      >
+        <option value={5}>5 rows</option>
+        <option value={10}>10 rows</option>
+        <option value={20}>20 rows</option>
+      </Form.Select>
+    </InputGroup>
+
+    <Card className="p-4 shadow-sm mb-4">
+      <h4 className="text-info">{editing ? 'Edit Employee' : ' ➕ Add New Employee'}</h4>
+      <Form onSubmit={handleSubmit}>
+        <Row>
+          <Col xs={12} md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                disabled={loading.form}
+              />
+            </Form.Group>
+          </Col>
+
+          <Col xs={12} md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Employee Number</Form.Label>
+              <Form.Control
+                type="text"
+                name="employeeNumber"
+                value={formData.employeeNumber}
+                onChange={handleChange}
+                required
+                disabled={loading.form}
+              />
+            </Form.Group>
+          </Col>
+
+          <Col xs={12}>
+            <h5 className="mt-3">Department Details</h5>
+          </Col>
+
+          <Col xs={12} md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Department</Form.Label>
+              <Form.Select
+                value={
+                  departmentData.find(
+                    (dept) =>
+                      dept.codeType === formData.department.codeType &&
+                      dept.codeValue === formData.department.codeValue
+                  )?.id || ''
+                }
+                onChange={handleDepartmentChange}
+                disabled={loading.departments || loading.form}
+                required
+              >
+                <option value="">Select Department</option>
+                {departmentData.map((dept) => (
+                  <option key={dept.id} value={dept.id}>
+                    {dept.codeType} - {dept.codeValue}
+                  </option>
+                ))}
+              </Form.Select>
+              {loading.departments && (
+                <small className="text-muted">Loading departments...</small>
+              )}
+            </Form.Group>
+          </Col>
+
+          <Col xs={12} md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Person Type</Form.Label>
+              <Form.Select
+                name="personType"
+                value={formData.personType}
+                onChange={handleChange}
+                disabled={loading.form}
+                required
+              >
+                <option value="SUPPLIER">Supplier</option>
+                <option value="CUSTOMER">Customer</option>
+                <option value="EMPLOYEE">Employee</option>
+              </Form.Select>
+            </Form.Group>
+          </Col>
+
+          <Col xs={12} md={6}>
+            <Form.Group className="mb-3">
+              <Form.Check
+                type="checkbox"
+                label="Employee Active"
+                name="active"
+                checked={formData.active}
+                onChange={handleCheckboxChange}
+                disabled={loading.form}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <div className="d-flex flex-column flex-sm-row gap-2">
+          <Button
+            type="submit"
+            variant={editing ? 'success' : 'primary'}
+            disabled={loading.form || loading.departments}
+          >
+            {loading.form ? (
+              <>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
                 />
-                <Form.Select
-                    value={rowsPerPage}
-                    onChange={(e) => {
-                        setRowsPerPage(Number(e.target.value));
-                        setCurrentPage(1);
-                    }}
-                    style={{ maxWidth: '150px', marginLeft: '1rem' }}
-                    disabled={loading.employees}
-                >
-                    <option value={5}>5 rows</option>
-                    <option value={10}>10 rows</option>
-                    <option value={20}>20 rows</option>
-                </Form.Select>
-            </InputGroup>
+                <span className="ms-2">Processing...</span>
+              </>
+            ) : editing ? (
+              'Update Employee'
+            ) : (
+              ' ➕ Add Employee'
+            )}
+          </Button>
 
-            <Card className="p-4 shadow-sm mb-4">
-                <h4 className='text-info'>{editing ? 'Edit Employee' : ' ➕ Add New Employee'}</h4>
-                <Form onSubmit={handleSubmit}>
-                    <Row>
-                        <Col md={6}>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    required
-                                    disabled={loading.form}
-                                />
-                            </Form.Group>
-                        </Col>
-                        
-                        <Col md={6}>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Employee Number</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="employeeNumber"
-                                    value={formData.employeeNumber}
-                                    onChange={handleChange}
-                                    required
-                                    disabled={loading.form}
-                                />
-                            </Form.Group>
-                        </Col>
+          {editing && (
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={resetForm}
+              disabled={loading.form}
+            >
+              Cancel
+            </Button>
+          )}
+        </div>
+      </Form>
+    </Card>
 
-                        <Col md={12}>
-                            <h5 className="mt-3">Department Details</h5>
-                        </Col>
-
-                        <Col md={6}>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Department</Form.Label>
-                                <Form.Select
-                                    value={departmentData.find(dept => 
-                                        dept.codeType === formData.department.codeType && 
-                                        dept.codeValue === formData.department.codeValue
-                                    )?.id || ''}
-                                    onChange={handleDepartmentChange}
-                                    disabled={loading.departments || loading.form}
-                                    required
-                                >
-                                    <option value="">Select Department</option>
-                                    {departmentData.map(dept => (
-                                        <option key={dept.id} value={dept.id}>
-                                            {dept.codeType} - {dept.codeValue}
-                                        </option>
-                                    ))}
-                                </Form.Select>
-                                {loading.departments && <small className="text-muted">Loading departments...</small>}
-                            </Form.Group>
-                        </Col>
-
-                        <Col md={6}>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Person Type</Form.Label>
-                                <Form.Select
-                                    name="personType"
-                                    value={formData.personType}
-                                    onChange={handleChange}
-                                    disabled={loading.form}
-                                    required
-                                >
-                                    <option value="SUPPLIER">Supplier</option>
-                                    <option value="CUSTOMER">Customer</option>
-                                    <option value="EMPLOYEE">Employee</option>
-                                </Form.Select>
-                            </Form.Group>
-                        </Col>
-
-                        <Col md={6}>
-                            <Form.Group className="mb-3">
-                                <Form.Check
-                                    type="checkbox"
-                                    label="Employee Active"
-                                    name="active"
-                                    checked={formData.active}
-                                    onChange={handleCheckboxChange}
-                                    disabled={loading.form}
-                                />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-
-                    <div className="d-flex gap-2">
-                        <Button 
-                            type="submit" 
-                            variant={editing ? 'success' : 'primary'}
-                            disabled={loading.form || loading.departments}
+    <Card className="p-3 shadow-sm">
+      <h4 className="mb-3">Employee List</h4>
+      {loading.employees && !employeeData.length ? (
+        <div className="text-center my-4">
+          <Spinner animation="border" variant="primary" />
+          <p>Loading employees...</p>
+        </div>
+      ) : (
+        <>
+          <div className="table-responsive">
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Employee #</th>
+                  <th>Department</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedData.length > 0 ? (
+                  paginatedData.map((employee, index) => (
+                    <tr key={employee.id}>
+                      <td>{(currentPage - 1) * rowsPerPage + index + 1}</td>
+                      <td>{employee.name}</td>
+                      <td>{employee.employeeNumber}</td>
+                      <td>{employee.department?.codeType}</td>
+                      <td>{employee.personType}</td>
+                      <td>
+                        <span
+                          className={`badge ${
+                            employee.active ? 'bg-success' : 'bg-secondary'
+                          }`}
                         >
-                            {loading.form ? (
-                                <>
-                                    <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-                                    <span className="ms-2">Processing...</span>
-                                </>
-                            ) : editing ? 'Update Employee' : ' ➕ Add Employee'}
+                          {employee.active ? 'Active' : 'Inactive'}
+                        </span>
+                      </td>
+                      <td>
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          onClick={() => fetchEmployeeById(employee.id)}
+                          disabled={loading.form || loading.employees}
+                          className="me-2"
+                        >
+                          Edit
                         </Button>
-                        
-                        {editing && (
-                            <Button 
-                                type="button" 
-                                variant="secondary" 
-                                onClick={resetForm}
-                                disabled={loading.form}
-                            >
-                                Cancel
-                            </Button>
-                        )}
-                    </div>
-                </Form>
-            </Card>
-
-            <Card className="p-3 shadow-sm">
-                <h4 className="mb-3">Employee List</h4>
-                {loading.employees && !employeeData.length ? (
-                    <div className="text-center my-4">
-                        <Spinner animation="border" variant="primary" />
-                        <p>Loading employees...</p>
-                    </div>
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() => handleDelete(employee.id)}
+                          disabled={loading.employees}
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
                 ) : (
-                    <>
-                        <Table striped bordered hover responsive>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Employee #</th>
-                                    <th>Department</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {paginatedData.length > 0 ? (
-                                    paginatedData.map((employee, index) => (
-                                        <tr key={employee.id}>
-                                            <td>{(currentPage - 1) * rowsPerPage + index + 1}</td>
-                                            <td>{employee.name}</td>
-                                            <td>{employee.employeeNumber}</td>
-                                            <td>{employee.department?.codeType}</td>
-                                            <td>{employee.personType}</td>
-                                            <td>
-                                                <span className={`badge ${employee.active ? 'bg-success' : 'bg-secondary'}`}>
-                                                    {employee.active ? 'Active' : 'Inactive'}
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <Button 
-                                                    variant="primary" 
-                                                    size="sm" 
-                                                    onClick={() => fetchEmployeeById(employee.id)}
-                                                    disabled={loading.form || loading.employees}
-                                                    className="me-2"
-                                                >
-                                                    Edit
-                                                </Button>
-                                                <Button 
-                                                    variant="danger" 
-                                                    size="sm" 
-                                                    onClick={() => handleDelete(employee.id)}
-                                                    disabled={loading.employees}
-                                                >
-                                                    Delete
-                                                </Button>
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="7" className="text-center">
-                                            No employees found
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </Table>
-
-                        {filteredData.length > rowsPerPage && (
-                            <div className="d-flex justify-content-between align-items-center mt-3">
-                                <Button
-                                    variant="outline-primary"
-                                    disabled={currentPage === 1 || loading.employees}
-                                    onClick={() => setCurrentPage(prev => prev - 1)}
-                                >
-                                    Previous
-                                </Button>
-                                <span className="text-muted">
-                                    Page {currentPage} of {totalPages} ({filteredData.length} employees)
-                                </span>
-                                <Button
-                                    variant="outline-primary"
-                                    disabled={currentPage === totalPages || loading.employees}
-                                    onClick={() => setCurrentPage(prev => prev + 1)}
-                                >
-                                    Next
-                                </Button>
-                            </div>
-                        )}
-                    </>
+                  <tr>
+                    <td colSpan="7" className="text-center">
+                      No employees found
+                    </td>
+                  </tr>
                 )}
-            </Card>
-        </Container>
-    );
+              </tbody>
+            </Table>
+          </div>
+
+          {filteredData.length > rowsPerPage && (
+            <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2 mt-3">
+              <Button
+                variant="outline-primary"
+                disabled={currentPage === 1 || loading.employees}
+                onClick={() => setCurrentPage((prev) => prev - 1)}
+              >
+                Previous
+              </Button>
+              <span className="text-muted">
+                Page {currentPage} of {totalPages} ({filteredData.length} employees)
+              </span>
+              <Button
+                variant="outline-primary"
+                disabled={currentPage === totalPages || loading.employees}
+                onClick={() => setCurrentPage((prev) => prev + 1)}
+              >
+                Next
+              </Button>
+            </div>
+          )}
+        </>
+      )}
+    </Card>
+  </Container>
+);
+
 }
 
 export default Employee;
