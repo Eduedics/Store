@@ -17,7 +17,7 @@ function SideBar({ isOpen, toggleSidebar }) {
   };
   return (
     <div className='container'>
-      <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
+      <div className={`sidebar ${isOpen ? 'closed' : 'open'}`}>
         <div className="sidebar-header">
           <div className="logo">
             <span>SmartJ</span>
@@ -182,7 +182,7 @@ function SideBar({ isOpen, toggleSidebar }) {
         </div>
         
         <div className="sidebar-toggle" onClick={toggleSidebar}>
-          <i className={`fas fa-chevron-${isOpen ? 'left' : 'right'}`}></i>
+          <i className={`fas fa-chevron-${isOpen ? 'right' : 'left'}`}></i>
         </div>
 
       </div>

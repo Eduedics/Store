@@ -36,7 +36,7 @@ function App() {
       <Router>
         <div className="app-container">
         <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-         <div className={`main-content ${isOpen ? 'expanded' : ''}`}>
+         <div className={`main-content ${isOpen ? '' : 'expanded'}`}>
           <Header toggleSidebar={toggleSidebar} />
           <div className="content">
             <ToastContainer 
