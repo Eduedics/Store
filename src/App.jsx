@@ -25,7 +25,7 @@ import './App.css'
 import Contact from './pages/Contact.jsx';
 import { useState } from 'react';
 function App() {
-  const [isOpen, setisOpen] = useState(true);
+  const [isOpen, setisOpen] = useState(false);
 
   const toggleSidebar = () => {
     setisOpen(!isOpen);
